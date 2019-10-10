@@ -21,17 +21,14 @@ import frc.robot.OI.ActionType;
  */
 public class Robot extends TimedRobot {
   /* The Operator Interface */
-  public static OI oi;
+  public static final OI oi = new OI();
 
-  Command autonomousCommand;
-  SendableChooser<Command> chooser = new SendableChooser<>();
+  private Command autonomousCommand;
+  private SendableChooser<Command> chooser = new SendableChooser<>();
 
-  @Override
-  public void robotInit() {
-    System.out.println("Robot Init!");
-    oi = new OI();
+  public Robot() {
     /*
-     * Button actions are registered on robot init using the registerCommand()
+     * Button actions are registered on robot construction using the registerCommand()
      * method, which is a streamlined, cleaner version than placing commands directly
      * in the OI. This method allows the OI to be portable, that is, it can be used
      * across robot projects and years. 
@@ -39,7 +36,10 @@ public class Robot extends TimedRobot {
 
     /* Zero the drivetrain encoders when button 11 is pressed. */
     oi.registerCommand(11, ActionType.PRESS, () -> Subsystems.driveTrain.zero(), Subsystems.driveTrain);
+  }
 
+  @Override
+  public void robotInit() {
     //chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", chooser);
