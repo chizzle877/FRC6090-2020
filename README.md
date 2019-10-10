@@ -46,4 +46,4 @@ Usage:
 Note that this needs to be run as `root`, and of course provide the interface that you're connected to, either USB or Ethernet. You should not need this tool for deploying wirelessly as the radio will automatically  take care of DHCP operations.
 
 ## Contributing
-TODO: add contributing guide here.
+Please view our [Code Of Conduct](CODE_OF_CONDUCT.md). Eventually we will add a contributing guide. Eventually. Maybe. Possibly.
