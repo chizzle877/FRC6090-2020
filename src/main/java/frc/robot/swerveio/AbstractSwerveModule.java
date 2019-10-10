@@ -69,6 +69,18 @@ public abstract class AbstractSwerveModule {
     public abstract void stopDriveMotor();
 
     /**
+     * Sets the ramp rate for the pivot motor.
+     * @param rate Time in seconds to go from 0 to full throttle.
+     */
+    public abstract void setPivotClosedLoopRampRate(double rate);
+
+    /**
+     * Sets the ramp rate for the drive motor.
+     * @param rate Time in seconds to go from 0 to full throttle.
+     */
+    public abstract void setDriveClosedLoopRampRate(double rate);
+
+    /**
      * Set the drive motor to the given reference. This should act
      * as the interface for a closed-loop position control. PID constants
      * should be placed in the actual implementation of the module.
@@ -83,6 +95,54 @@ public abstract class AbstractSwerveModule {
      * @param ref The reference to set for closed loop control.
      */
     public abstract void setPivotReference(double ref);
+
+    /**
+     * Set the proportional gain of the PID loop coefficient.
+     * (The motor will correct itself proportional to the offset
+     * of the measure compared to its targeted measure.)
+     * It's only weakness will be when it treats positive and negative
+     * offset equally, otherwise it narrows error to 0.
+     * @param gain Proportional gain value. Must be positive.
+     */
+    public abstract void setPidControllerP(double gain);
+
+    /**
+     * Set the integral gain of the PID loop coefficient.
+     * (The motor will correct itself based on past errors and integrates
+     * the history of offset to narrow error down to 0.)
+     * The downside of using a purely integral system is that it's slow to
+     * start, as it takes time to accumulate enough information to accurately
+     * form it's coefficient.
+     * @param gain Integral gain value. Must be positive.
+     */
+    public abstract void setPidControllerI(double gain);
+
+    /**
+     * Set the derivative gain of the PID loop coefficient.
+     * (The motor will correct error based on it's rate of change, not seeking
+     * to bring the error to 0, but seeking to keep the error that the system is
+     * stable.)
+     * A derivative loop will never bring your error to 0, but will simply
+     * keep your error from growing larger by catching any change and correcting it.
+     * @param gain Derivative gain value. Must be positive.
+     */
+    public abstract void setPidControllerD(double gain);
+
+    /**
+     * Sets the range of error allowed in the PID loop for the integral
+     * factor to disable. This will prevent the integral loop from continuing
+     * to integrate error when the error is too close to 0 to matter.
+     * @param IZone IZone value. Must be positive, or set to 0 to disable.
+     */
+    public abstract void setPidControllerIZone(double IZone);
+
+    /**
+     * Sets the priority held in feed-forward augment. In a closed loop system,
+     * the feed-forward predicts the outcome of the next output from the motor
+     * controllers for better error correcting accuracy.
+     * @param gain Feed-forward gain value. Must be positive.
+     */
+    public abstract void setPidControllerFF(double gain);
 
     /**
      * Stop the entire module, this just calls the

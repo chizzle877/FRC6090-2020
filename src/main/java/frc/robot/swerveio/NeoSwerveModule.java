@@ -108,4 +108,39 @@ public class NeoSwerveModule extends AbstractSwerveModule {
     public void setDriveReference(double ref) {
         throw new SwerveImplementationException("setDriveReference() is not implemented for NeoSwerveModule!");
     }
+
+    @Override
+    public void setPivotClosedLoopRampRate(double rate) {
+        pivotMotor.setClosedLoopRampRate(rate);
+    }
+
+    @Override
+    public void setDriveClosedLoopRampRate(double rate) {
+        driveMotor.setClosedLoopRampRate(rate);
+    }
+
+    @Override
+    public void setPidControllerP(double gain) {
+        pivotPid.setP(gain);
+    }
+
+    @Override
+    public void setPidControllerI(double gain) {
+        pivotPid.setI(gain);
+    }
+
+    @Override
+    public void setPidControllerD(double gain) {
+        pivotPid.setD(gain);
+    }
+
+    @Override
+    public void setPidControllerIZone(double IZone) {
+        pivotPid.setIZone(IZone);
+    }
+
+    @Override
+    public void setPidControllerFF(double gain) {
+        pivotPid.setFF(gain);
+    }
 }
