@@ -35,11 +35,11 @@ public class NeoSwerveModule extends AbstractSwerveModule {
         pivotMotor.setIdleMode(IdleMode.kCoast);
 
         pivotPid = pivotMotor.getPIDController();
-        pivotPid.setP(0.1);
-        pivotPid.setI(1e-4);
-        pivotPid.setD(1);
-        pivotPid.setIZone(0);
-        pivotPid.setFF(0);
+        setPivotPidP(0.1);
+        setPivotPidI(1e-4);
+        setPivotPidD(1);
+        setPivotPidIZone(0);
+        setPivotPidFF(0);
         pivotPid.setOutputRange(-1, 1);
     }
 
