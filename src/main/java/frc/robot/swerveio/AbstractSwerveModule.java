@@ -6,7 +6,8 @@ package frc.robot.swerveio;
  * and implemented similarly across variations in motor controllers
  * and motors. This class is the sole abstraction layer between the
  * hardware-specific API and the SwerveIO API.
- * @author Jordan Bancino, Ethan Snyder
+ * @author Jordan Bancino
+ * @author Ethan Snyder
  */
 public abstract class AbstractSwerveModule {
 
