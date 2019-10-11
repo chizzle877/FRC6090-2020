@@ -9,89 +9,89 @@ package frc.robot.swerveio;
  * @author Jordan Bancino
  * @author Ethan Snyder
  */
-public abstract class AbstractSwerveModule {
+public interface AbstractSwerveModule {
 
     /**
      * Set the speed of the pivot motor. A negative value
      * is the reverse direction.
      * @param speed The speed to set the motor to.
      */
-    public abstract void setPivotMotorSpeed(double speed);
+    public void setPivotMotorSpeed(double speed);
 
     /**
      * Set the speed of the drive motor. A negative value
      * is the reverse direction.
      * @param speed The speed to set the motor to.
      */
-    public abstract void setDriveMotorSpeed(double speed);
+    public void setDriveMotorSpeed(double speed);
 
     /**
      * Get the currently set speed of the pivot motor.
      * @return The speed of the motor.
      */
-    public abstract double getPivotMotorSpeed();
+    public double getPivotMotorSpeed();
 
     /**
      * Get the currently set speed of the drive motor.
      * @return The speed of the motor.
      */
-    public abstract double getDriveMotorSpeed();
+    public double getDriveMotorSpeed();
 
     /**
      * Get an encoder reading from the pivot motor.
      * @return A raw encoder reading.
      */
-    public abstract double getPivotMotorEncoder();
+    public double getPivotMotorEncoder();
 
     /**
      * Get an encoder reading from the drive motor.
      * @return A raw encoder reading.
      */
-    public abstract double getDriveMotorEncoder();
+    public double getDriveMotorEncoder();
 
     /**
      * Zero the pivot encoder.
      */
-    public abstract void zeroPivotEncoder();
+    public void zeroPivotEncoder();
 
     /**
      * Zero the drive encoder.
      */
-    public abstract void zeroDriveEncoder();
+    public void zeroDriveEncoder();
 
     /**
      * Stop the pivot motor.
      */
-    public abstract void stopPivotMotor();
+    public void stopPivotMotor();
 
     /**
      * Stop the drive motor.
      */
-    public abstract void stopDriveMotor();
+    public void stopDriveMotor();
 
     /**
      * Sets the closed loop ramp rate for the pivot motor.
      * @param rate Time in seconds to go from 0 to full throttle.
      */
-    public abstract void setPivotClosedLoopRampRate(double rate);
+    public void setPivotClosedLoopRampRate(double rate);
 
     /**
      * Sets the open loop ramp rate for the pivot motor.
      * @param rate Time in seconds to go from 0 to full throttle.
      */
-    public abstract void setPivotOpenLoopRampRate(double rate);
+    public void setPivotOpenLoopRampRate(double rate);
 
     /**
      * Sets the closed loop ramp rate for the drive motor.
      * @param rate Time in seconds to go from 0 to full throttle.
      */
-    public abstract void setDriveClosedLoopRampRate(double rate);
+    public void setDriveClosedLoopRampRate(double rate);
 
     /**
      * Sets the open loop ramp rate for the drive motor.
      * @param rate Time in seconds to go from 0 to full throttle.
      */
-    public abstract void setDriveOpenLoopRampRate(double rate);
+    public void setDriveOpenLoopRampRate(double rate);
 
     /**
      * Set the drive motor to the given reference. This should act
@@ -99,7 +99,7 @@ public abstract class AbstractSwerveModule {
      * should be placed in the actual implementation of the module.
      * @param ref The reference to set for closed loop control.
      */
-    public abstract void setDriveReference(double ref);
+    public void setDriveReference(double ref);
 
     /**
      * Set the pivot motor to the given reference. This should act
@@ -107,7 +107,7 @@ public abstract class AbstractSwerveModule {
      * should be placed in the actual implementation of the module.
      * @param ref The reference to set for closed loop control.
      */
-    public abstract void setPivotReference(double ref);
+    public void setPivotReference(double ref);
 
     /**
      * Set the proportional gain of the PID loop coefficient.
@@ -117,8 +117,8 @@ public abstract class AbstractSwerveModule {
      * offset equally, otherwise it narrows error to 0.
      * @param gain Proportional gain value. Must be positive.
      */
-    public abstract void setPivotPidP(double gain);
-    public abstract void setDrivePidP(double gain);
+    public void setPivotPidP(double gain);
+    public void setDrivePidP(double gain);
 
     /**
      * Set the integral gain of the PID loop coefficient.
@@ -129,8 +129,8 @@ public abstract class AbstractSwerveModule {
      * form it's coefficient.
      * @param gain Integral gain value. Must be positive.
      */
-    public abstract void setPivotPidI(double gain);
-    public abstract void setDrivePidI(double gain);
+    public void setPivotPidI(double gain);
+    public void setDrivePidI(double gain);
 
     /**
      * Set the derivative gain of the PID loop coefficient.
@@ -141,8 +141,8 @@ public abstract class AbstractSwerveModule {
      * keep your error from growing larger by catching any change and correcting it.
      * @param gain Derivative gain value. Must be positive.
      */
-    public abstract void setPivotPidD(double gain);
-    public abstract void setDrivePidD(double gain); 
+    public void setPivotPidD(double gain);
+    public void setDrivePidD(double gain); 
 
     /**
      * Sets the range of error allowed in the PID loop for the integral
@@ -150,8 +150,8 @@ public abstract class AbstractSwerveModule {
      * to integrate error when the error is too close to 0 to matter.
      * @param iZone IZone value. Must be positive, or set to 0 to disable.
      */
-    public abstract void setPivotPidIZone(double iZone);
-    public abstract void setDrivePidIZone(double iZone);
+    public void setPivotPidIZone(double iZone);
+    public void setDrivePidIZone(double iZone);
 
     /**
      * Sets the priority held in feed-forward augment. In a closed loop system,
@@ -159,14 +159,14 @@ public abstract class AbstractSwerveModule {
      * controllers for better error correcting accuracy.
      * @param gain Feed-forward gain value. Must be positive.
      */
-    public abstract void setPivotPidFF(double gain);
-    public abstract void setDrivePidFF(double gain);
+    public void setPivotPidFF(double gain);
+    public void setDrivePidFF(double gain);
 
     /**
      * Stop the entire module, this just calls the
      * stop function for each motor.
      */
-    public final void stop() {
+    public default void stop() {
         stopPivotMotor();
         stopDriveMotor();
     }
@@ -175,7 +175,7 @@ public abstract class AbstractSwerveModule {
      * Zero all the encoders by calling the zero functions
      * for both the drive and pivot motors.
      */
-    public final void zero() {
+    public default void zero() {
         zeroPivotEncoder();
         zeroDriveEncoder();
     }
@@ -184,7 +184,7 @@ public abstract class AbstractSwerveModule {
      * Reset this module by stopping all motors and resetting
      * all the encoders.
      */
-    public final void reset() {
+    public default void reset() {
         stop();
         zero();
     }

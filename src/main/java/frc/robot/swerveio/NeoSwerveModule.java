@@ -11,7 +11,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
  * motors and Spark Max motor controllers.
  * @author Jordan Bancino
  */
-public class NeoSwerveModule extends AbstractSwerveModule {
+public class NeoSwerveModule implements AbstractSwerveModule {
     private CANSparkMax driveMotor, pivotMotor;
 
     private CANPIDController pivotPid;
