@@ -6,7 +6,7 @@ package frc.robot.swerveio;
  * and implemented similarly across variations in motor controllers
  * and motors. This class is the sole abstraction layer between the
  * hardware-specific API and the SwerveIO API.
- * @author Jordan Bancino
+ * @author Jordan Bancino, Ethan Snyder
  */
 public abstract class AbstractSwerveModule {
 
@@ -69,16 +69,28 @@ public abstract class AbstractSwerveModule {
     public abstract void stopDriveMotor();
 
     /**
-     * Sets the ramp rate for the pivot motor.
+     * Sets the closed loop ramp rate for the pivot motor.
      * @param rate Time in seconds to go from 0 to full throttle.
      */
     public abstract void setPivotClosedLoopRampRate(double rate);
 
     /**
-     * Sets the ramp rate for the drive motor.
+     * Sets the open loop ramp rate for the pivot motor.
+     * @param rate Time in seconds to go from 0 to full throttle.
+     */
+    public abstract void setPivotOpenLoopRampRate(double rate);
+
+    /**
+     * Sets the closed loop ramp rate for the drive motor.
      * @param rate Time in seconds to go from 0 to full throttle.
      */
     public abstract void setDriveClosedLoopRampRate(double rate);
+
+    /**
+     * Sets the open loop ramp rate for the drive motor.
+     * @param rate Time in seconds to go from 0 to full throttle.
+     */
+    public abstract void setDriveOpenLoopRampRate(double rate);
 
     /**
      * Set the drive motor to the given reference. This should act
@@ -104,7 +116,8 @@ public abstract class AbstractSwerveModule {
      * offset equally, otherwise it narrows error to 0.
      * @param gain Proportional gain value. Must be positive.
      */
-    public abstract void setPidControllerP(double gain);
+    public abstract void setPivotPidP(double gain);
+    public abstract void setDrivePidP(double gain);
 
     /**
      * Set the integral gain of the PID loop coefficient.
@@ -115,7 +128,8 @@ public abstract class AbstractSwerveModule {
      * form it's coefficient.
      * @param gain Integral gain value. Must be positive.
      */
-    public abstract void setPidControllerI(double gain);
+    public abstract void setPivotPidI(double gain);
+    public abstract void setDrivePidI(double gain);
 
     /**
      * Set the derivative gain of the PID loop coefficient.
@@ -126,15 +140,17 @@ public abstract class AbstractSwerveModule {
      * keep your error from growing larger by catching any change and correcting it.
      * @param gain Derivative gain value. Must be positive.
      */
-    public abstract void setPidControllerD(double gain);
+    public abstract void setPivotPidD(double gain);
+    public abstract void setDrivePidD(double gain); 
 
     /**
      * Sets the range of error allowed in the PID loop for the integral
      * factor to disable. This will prevent the integral loop from continuing
      * to integrate error when the error is too close to 0 to matter.
-     * @param IZone IZone value. Must be positive, or set to 0 to disable.
+     * @param iZone IZone value. Must be positive, or set to 0 to disable.
      */
-    public abstract void setPidControllerIZone(double IZone);
+    public abstract void setPivotPidIZone(double iZone);
+    public abstract void setDrivePidIZone(double iZone);
 
     /**
      * Sets the priority held in feed-forward augment. In a closed loop system,
@@ -142,7 +158,8 @@ public abstract class AbstractSwerveModule {
      * controllers for better error correcting accuracy.
      * @param gain Feed-forward gain value. Must be positive.
      */
-    public abstract void setPidControllerFF(double gain);
+    public abstract void setPivotPidFF(double gain);
+    public abstract void setDrivePidFF(double gain);
 
     /**
      * Stop the entire module, this just calls the

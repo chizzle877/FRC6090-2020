@@ -115,32 +115,67 @@ public class NeoSwerveModule extends AbstractSwerveModule {
     }
 
     @Override
+    public void setPivotOpenLoopRampRate(double rate) {
+        pivotMotor.setOpenLoopRampRate(rate);
+    }
+
+    @Override
     public void setDriveClosedLoopRampRate(double rate) {
         driveMotor.setClosedLoopRampRate(rate);
     }
 
     @Override
-    public void setPidControllerP(double gain) {
+    public void setDriveOpenLoopRampRate(double rate) {
+        driveMotor.setClosedLoopRampRate(rate);
+    }
+
+    @Override
+    public void setPivotPidP(double gain) {
         pivotPid.setP(gain);
     }
 
     @Override
-    public void setPidControllerI(double gain) {
+    public void setDrivePidP(double gain) {
+        throw new SwerveImplementationException("Drive motor PID not implemented!");
+    }
+
+    @Override
+    public void setPivotPidI(double gain) {
         pivotPid.setI(gain);
     }
 
     @Override
-    public void setPidControllerD(double gain) {
+    public void setDrivePidI(double gain) {
+        throw new SwerveImplementationException("Drive motor PID not implemented!");
+    }
+
+    @Override
+    public void setPivotPidD(double gain) {
         pivotPid.setD(gain);
     }
 
     @Override
-    public void setPidControllerIZone(double IZone) {
-        pivotPid.setIZone(IZone);
+    public void setDrivePidD(double gain) {
+        throw new SwerveImplementationException("Drive motor PID not implemented!");
     }
 
     @Override
-    public void setPidControllerFF(double gain) {
+    public void setPivotPidIZone(double iZone) {
+        pivotPid.setIZone(iZone);
+    }
+
+    @Override
+    public void setDrivePidIZone(double iZone) {
+        throw new SwerveImplementationException("Drive motor PID not implemented!");
+    }
+
+    @Override
+    public void setPivotPidFF(double gain) {
         pivotPid.setFF(gain);
+    }
+
+    @Override
+    public void setDrivePidFF(double gain) {
+        throw new SwerveImplementationException("Drive motor PID not implemented!");
     }
 }
