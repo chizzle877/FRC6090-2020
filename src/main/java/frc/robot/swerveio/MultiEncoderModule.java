@@ -8,10 +8,10 @@ package frc.robot.swerveio;
  * the proper reading.
  * @author Jordan Bancino
  */
-public abstract class MultiEncoderModule extends AbstractSwerveModule {
+public interface MultiEncoderModule extends AbstractSwerveModule {
     public static enum EncoderSetting {
-        ANALOG, SPARK_MAX
+        ANALOG, INTERNAL
     }
-    public abstract void setEncoder(EncoderSetting encoder);
-    public abstract EncoderSetting getEncoderSetting();
+    public void setEncoder(EncoderSetting encoder);
+    public EncoderSetting getEncoderSetting();
 }

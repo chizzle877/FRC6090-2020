@@ -11,7 +11,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
  * motors and Spark Max motor controllers.
  * @author Jordan Bancino
  */
-public class NeoSwerveModule extends AbstractSwerveModule {
+public class NeoSwerveModule implements AbstractSwerveModule {
     private CANSparkMax driveMotor, pivotMotor;
 
     private CANPIDController pivotPid;
@@ -35,11 +35,11 @@ public class NeoSwerveModule extends AbstractSwerveModule {
         pivotMotor.setIdleMode(IdleMode.kCoast);
 
         pivotPid = pivotMotor.getPIDController();
-        pivotPid.setP(0.1);
-        pivotPid.setI(1e-4);
-        pivotPid.setD(1);
-        pivotPid.setIZone(0);
-        pivotPid.setFF(0);
+        setPivotPidP(0.1);
+        setPivotPidI(1e-4);
+        setPivotPidD(1);
+        setPivotPidIZone(0);
+        setPivotPidFF(0);
         pivotPid.setOutputRange(-1, 1);
     }
 
@@ -107,5 +107,75 @@ public class NeoSwerveModule extends AbstractSwerveModule {
     @Override
     public void setDriveReference(double ref) {
         throw new SwerveImplementationException("setDriveReference() is not implemented for NeoSwerveModule!");
+    }
+
+    @Override
+    public void setPivotClosedLoopRampRate(double rate) {
+        pivotMotor.setClosedLoopRampRate(rate);
+    }
+
+    @Override
+    public void setPivotOpenLoopRampRate(double rate) {
+        pivotMotor.setOpenLoopRampRate(rate);
+    }
+
+    @Override
+    public void setDriveClosedLoopRampRate(double rate) {
+        driveMotor.setClosedLoopRampRate(rate);
+    }
+
+    @Override
+    public void setDriveOpenLoopRampRate(double rate) {
+        driveMotor.setClosedLoopRampRate(rate);
+    }
+
+    @Override
+    public void setPivotPidP(double gain) {
+        pivotPid.setP(gain);
+    }
+
+    @Override
+    public void setDrivePidP(double gain) {
+        throw new SwerveImplementationException("Drive motor PID not implemented!");
+    }
+
+    @Override
+    public void setPivotPidI(double gain) {
+        pivotPid.setI(gain);
+    }
+
+    @Override
+    public void setDrivePidI(double gain) {
+        throw new SwerveImplementationException("Drive motor PID not implemented!");
+    }
+
+    @Override
+    public void setPivotPidD(double gain) {
+        pivotPid.setD(gain);
+    }
+
+    @Override
+    public void setDrivePidD(double gain) {
+        throw new SwerveImplementationException("Drive motor PID not implemented!");
+    }
+
+    @Override
+    public void setPivotPidIZone(double iZone) {
+        pivotPid.setIZone(iZone);
+    }
+
+    @Override
+    public void setDrivePidIZone(double iZone) {
+        throw new SwerveImplementationException("Drive motor PID not implemented!");
+    }
+
+    @Override
+    public void setPivotPidFF(double gain) {
+        pivotPid.setFF(gain);
+    }
+
+    @Override
+    public void setDrivePidFF(double gain) {
+        throw new SwerveImplementationException("Drive motor PID not implemented!");
     }
 }
