@@ -43,11 +43,23 @@ public class DriveTrain extends SwerveDrive {
     moduleMap.put(SwerveModule.REAR_LEFT, new NeoSwerveModule(RobotMap.REAR_LEFT_DRIVE_MOTOR, RobotMap.REAR_LEFT_PIVOT_MOTOR, RobotMap.REAR_LEFT_ANALOG_ENCODER));
     moduleMap.put(SwerveModule.REAR_RIGHT, new NeoSwerveModule(RobotMap.REAR_RIGHT_DRIVE_MOTOR, RobotMap.REAR_RIGHT_PIVOT_MOTOR, RobotMap.REAR_RIGHT_ANALOG_ENCODER));
     HashMap<SwerveModule, AbstractSwerveModule> retMap = new HashMap<>();
+    /**
+     * Here we set the module's settings. Set them for each module.
+     */
     for (var modKey : moduleMap.keySet()) {
       MultiEncoderModule module = moduleMap.get(modKey);
       /* TODO: Use the analog encoder! */
       module.setEncoder(EncoderSetting.INTERNAL);
       module.zeroDriveEncoder();
+
+      module.setPivotClosedLoopRampRate(0);
+      module.setPivotPidP(0.1);
+      module.setPivotPidI(1e-4);
+      module.setPivotPidD(1);
+      module.setPivotPidIZone(0);
+      module.setPivotPidFF(0);
+
+      /* Make sure the module is returned. */
       retMap.put(modKey, module);
     }
     return retMap;

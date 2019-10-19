@@ -35,18 +35,11 @@ public class NeoSwerveModule implements MultiEncoderModule {
     public NeoSwerveModule (int driveCanId, int pivotCanId, int analogEncoderChannel) {
         driveMotor = new CANSparkMax(driveCanId, MotorType.kBrushless);
         pivotMotor = new CANSparkMax(pivotCanId, MotorType.kBrushless);
-
         pivotEncoder = new AnalogInput(analogEncoderChannel);
 
-        pivotMotor.setClosedLoopRampRate(0);
         pivotMotor.setIdleMode(IdleMode.kCoast);
 
         pivotPid = pivotMotor.getPIDController();
-        setPivotPidP(0.1);
-        setPivotPidI(1e-4);
-        setPivotPidD(1);
-        setPivotPidIZone(0);
-        setPivotPidFF(0);
         pivotPid.setOutputRange(-1, 1);
     }
 
