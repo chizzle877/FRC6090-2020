@@ -2,6 +2,8 @@ package frc.robot.swerveio;
 
 import java.awt.Rectangle;
 
+import static java.lang.Math.*;
+
 /**
  * A swerve drive calculator that performs all the calculations required
  * to obtain wheel angles and speeds. The proofs behind why this works is
@@ -102,7 +104,7 @@ public class SwerveDriveCalculator {
      */
     public double getWheelAngle(SwerveModule module, double fwd, double str, double rcw) {
         double[] tmp = getWheelConstants(module, fwd, str, rcw);
-        return Math.toDegrees(Math.atan2(tmp[0], tmp[1]));
+        return toDegrees(atan2(tmp[0], tmp[1]));
     }
 
     /**
@@ -116,8 +118,13 @@ public class SwerveDriveCalculator {
      * @return The angle (in degrees) that the given wheel should be set to.
      */
     public double getWheelAngle(SwerveModule module, double fwd, double str, double rcw, double gyroAngle) {
-        double cosAngle = Math.cos(Math.toRadians(gyroAngle));
-        double sinAngle = Math.sin(Math.toRadians(gyroAngle));
+        System.out.println("Gyro: " + gyroAngle);
+        double cosAngle = cos(toRadians(gyroAngle));
+        double sinAngle = sin(toRadians(gyroAngle));
+
+        //cosAngle = abs(cosAngle);
+        //sinAngle = abs(sinAngle);
+
         double modFwd = fwd * cosAngle + str * sinAngle;
         double modStr = -fwd * sinAngle + str * cosAngle;
         return getWheelAngle(module, modFwd, modStr, rcw);
@@ -134,7 +141,7 @@ public class SwerveDriveCalculator {
      */
     public double getWheelSpeed(SwerveModule module, double fwd, double str, double rcw) {
         double[] tmp = getWheelConstants(module, fwd, str, rcw);
-        double wheelSpeed = Math.sqrt(Math.pow(tmp[0], 2) + Math.pow(tmp[1], 2));
+        double wheelSpeed = sqrt(pow(tmp[0], 2) + pow(tmp[1], 2));
         return (wheelSpeed > 1f) ? 1f : wheelSpeed;
     }
 
@@ -151,7 +158,7 @@ public class SwerveDriveCalculator {
      */
     private double[] getWheelConstants(SwerveModule module, double fwd, double str, double rcw) {
         /* Calculate the ratio constant */
-        final double R =  Math.sqrt(Math.pow(baseLength, 2) + Math.pow(baseWidth, 2));
+        final double R =  sqrt(pow(baseLength, 2) + pow(baseWidth, 2));
         /* Allocate the array */
         double tmp[] = new double[2];
         /*
