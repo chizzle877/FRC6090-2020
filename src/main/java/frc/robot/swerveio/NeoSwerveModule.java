@@ -18,6 +18,7 @@ public class NeoSwerveModule implements MultiEncoderModule {
 
     private CANPIDController pivotPid;
     private AnalogInput pivotEncoder;
+    private double analogEncoderOffset = 0;
     private EncoderSetting useEncoder = EncoderSetting.ANALOG;
 
     /**
@@ -73,7 +74,7 @@ public class NeoSwerveModule implements MultiEncoderModule {
         switch (useEncoder) {
             case ANALOG:
                 /* Scale the encoder voltage to go from 0 -> 5 volts to 0 -> 360 degrees */
-                return (360 / 5) * pivotEncoder.getVoltage();
+                return (360 / 5) * (pivotEncoder.getVoltage() - analogEncoderOffset);
             case INTERNAL:
                 return pivotMotor.getEncoder().getPosition();
             default:
@@ -88,7 +89,9 @@ public class NeoSwerveModule implements MultiEncoderModule {
 
     @Override
     public void zeroPivotEncoder() {
+        analogEncoderOffset = pivotEncoder.getVoltage();
         pivotMotor.getEncoder().setPosition(0);
+        
     }
 
     @Override
