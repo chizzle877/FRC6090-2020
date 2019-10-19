@@ -20,6 +20,7 @@ import frc.robot.OI.ActionType;
  * @author Jordan Bancino
  */
 public class Robot extends TimedRobot {
+
   /* The Operator Interface */
   public static final OI oi = new OI();
 
@@ -36,6 +37,10 @@ public class Robot extends TimedRobot {
 
     /* Zero the drivetrain encoders when button 11 is pressed. */
     oi.registerCommand(11, ActionType.PRESS, () -> Subsystems.driveTrain.zero(), Subsystems.driveTrain);
+    oi.registerCommand(12, ActionType.PRESS, () -> {
+      Subsystems.gyro.zero();
+      System.out.println("Gyro reset command called.");
+    }, Subsystems.gyro);
   }
 
   @Override
@@ -43,6 +48,8 @@ public class Robot extends TimedRobot {
     //chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", chooser);
+
+    Subsystems.gyro.zero();
   }
 
   /**
