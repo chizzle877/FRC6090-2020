@@ -121,12 +121,8 @@ public class SwerveDriveCalculator {
         System.out.println("Gyro: " + gyroAngle);
         double cosAngle = cos(toRadians(gyroAngle));
         double sinAngle = sin(toRadians(gyroAngle));
-
-        //cosAngle = abs(cosAngle);
-        //sinAngle = abs(sinAngle);
-
-        double modFwd = fwd * cosAngle + str * sinAngle;
-        double modStr = -fwd * sinAngle + str * cosAngle;
+        double modFwd = (fwd * cosAngle) + (str * sinAngle);
+        double modStr = (fwd * sinAngle) + (str * cosAngle);
         return getWheelAngle(module, modFwd, modStr, rcw);
     }
 
