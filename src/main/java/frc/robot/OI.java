@@ -93,6 +93,7 @@ public class OI {
         joystickButton[button].whileHeld(command);
         break;
     }
+    System.out.println("Command registered for button: " + button + " (Type: " + actionType + ")");
   }
 
   /**
@@ -140,6 +141,7 @@ public class OI {
       protected void execute() {
         runnable.run();
         isFinished = true;
+        System.out.println("Executed Runnable Command.");
       }
     }
     registerCommand(button, actionType, new RunnableCommand(runnable, requiredSubsystems));
