@@ -3,11 +3,13 @@ package frc.robot.subsystems;
 import frc.robot.RobotMap;
 import frc.robot.commands.joystick.DriveWithJoystick;
 import frc.robot.swerveio.AbstractSwerveModule;
+import frc.robot.swerveio.MultiEncoderModule;
 import frc.robot.swerveio.NeoSwerveModule;
 import frc.robot.swerveio.SwerveDrive;
 import frc.robot.swerveio.SwerveDriveCalculator;
 import frc.robot.swerveio.SwerveImplementationException;
 import frc.robot.swerveio.SwerveModule;
+import frc.robot.swerveio.MultiEncoderModule.EncoderSetting;
 
 import java.util.HashMap;
 
@@ -35,16 +37,20 @@ public class DriveTrain extends SwerveDrive {
   private static final HashMap<SwerveModule, AbstractSwerveModule> modules = createModuleMap();
 
   public static HashMap<SwerveModule, AbstractSwerveModule> createModuleMap() {
-    HashMap<SwerveModule, AbstractSwerveModule> moduleMap = new HashMap<>();
-    moduleMap.put(SwerveModule.FRONT_LEFT, new NeoSwerveModule(RobotMap.FRONT_LEFT_DRIVE_MOTOR, RobotMap.FRONT_LEFT_PIVOT_MOTOR));
-    moduleMap.put(SwerveModule.FRONT_RIGHT, new NeoSwerveModule(RobotMap.FRONT_RIGHT_DRIVE_MOTOR, RobotMap.FRONT_RIGHT_PIVOT_MOTOR));
-    moduleMap.put(SwerveModule.REAR_LEFT, new NeoSwerveModule(RobotMap.REAR_LEFT_DRIVE_MOTOR, RobotMap.REAR_LEFT_PIVOT_MOTOR));
-    moduleMap.put(SwerveModule.REAR_RIGHT, new NeoSwerveModule(RobotMap.REAR_RIGHT_DRIVE_MOTOR, RobotMap.REAR_RIGHT_PIVOT_MOTOR));
-    for (var module : moduleMap.values()) {
+    HashMap<SwerveModule, MultiEncoderModule> moduleMap = new HashMap<>();
+    moduleMap.put(SwerveModule.FRONT_LEFT, new NeoSwerveModule(RobotMap.FRONT_LEFT_DRIVE_MOTOR, RobotMap.FRONT_LEFT_PIVOT_MOTOR, RobotMap.FRONT_LEFT_ANALOG_ENCODER));
+    moduleMap.put(SwerveModule.FRONT_RIGHT, new NeoSwerveModule(RobotMap.FRONT_RIGHT_DRIVE_MOTOR, RobotMap.FRONT_RIGHT_PIVOT_MOTOR, RobotMap.FRONT_RIGHT_ANALOG_ENCODER));
+    moduleMap.put(SwerveModule.REAR_LEFT, new NeoSwerveModule(RobotMap.REAR_LEFT_DRIVE_MOTOR, RobotMap.REAR_LEFT_PIVOT_MOTOR, RobotMap.REAR_LEFT_ANALOG_ENCODER));
+    moduleMap.put(SwerveModule.REAR_RIGHT, new NeoSwerveModule(RobotMap.REAR_RIGHT_DRIVE_MOTOR, RobotMap.REAR_RIGHT_PIVOT_MOTOR, RobotMap.REAR_RIGHT_ANALOG_ENCODER));
+    HashMap<SwerveModule, AbstractSwerveModule> retMap = new HashMap<>();
+    for (var modKey : moduleMap.keySet()) {
+      MultiEncoderModule module = moduleMap.get(modKey);
+      /* TODO: Use the analog encoder! */
+      module.setEncoder(EncoderSetting.INTERNAL);
       module.zeroDriveEncoder();
-      module.zeroPivotEncoder();
+      retMap.put(modKey, module);
     }
-    return moduleMap;
+    return retMap;
   }
 
   /**

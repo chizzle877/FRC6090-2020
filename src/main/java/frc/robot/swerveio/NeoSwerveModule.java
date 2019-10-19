@@ -2,19 +2,23 @@ package frc.robot.swerveio;
 
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.ControlType;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.ControlType;
+
+import edu.wpi.first.wpilibj.AnalogInput;
 
 /**
  * A swerve module implementation that uses RevRobotics Neo
  * motors and Spark Max motor controllers.
  * @author Jordan Bancino
  */
-public class NeoSwerveModule implements AbstractSwerveModule {
+public class NeoSwerveModule implements MultiEncoderModule {
     private CANSparkMax driveMotor, pivotMotor;
 
     private CANPIDController pivotPid;
+    private AnalogInput pivotEncoder;
+    private EncoderSetting useEncoder = EncoderSetting.ANALOG;
 
     /**
      * The swerve module is constructed to allow the pivot motor
@@ -28,9 +32,12 @@ public class NeoSwerveModule implements AbstractSwerveModule {
      * Create a new swerve module composed of Neo brushless
      * motors, this uses spark max motor controllers.
      */
-    public NeoSwerveModule (int driveCanId, int pivotCanId) {
+    public NeoSwerveModule (int driveCanId, int pivotCanId, int analogEncoderChannel) {
         driveMotor = new CANSparkMax(driveCanId, MotorType.kBrushless);
         pivotMotor = new CANSparkMax(pivotCanId, MotorType.kBrushless);
+
+        pivotEncoder = new AnalogInput(analogEncoderChannel);
+
         pivotMotor.setClosedLoopRampRate(0);
         pivotMotor.setIdleMode(IdleMode.kCoast);
 
@@ -70,7 +77,15 @@ public class NeoSwerveModule implements AbstractSwerveModule {
 
     @Override
     public double getPivotMotorEncoder() {
-        return pivotMotor.getEncoder().getPosition();
+        switch (useEncoder) {
+            case ANALOG:
+                /* Scale the encoder voltage to go from 0 -> 5 volts to 0 -> 360 degrees */
+                return (360 / 5) * pivotEncoder.getVoltage();
+            case INTERNAL:
+                return pivotMotor.getEncoder().getPosition();
+            default:
+                return 0;
+        }
     }
 
     @Override
@@ -177,5 +192,16 @@ public class NeoSwerveModule implements AbstractSwerveModule {
     @Override
     public void setDrivePidFF(double gain) {
         throw new SwerveImplementationException("Drive motor PID not implemented!");
+    }
+
+    @Override
+    public void setEncoder(EncoderSetting encoder) {
+        useEncoder = encoder;
+
+    }
+
+    @Override
+    public EncoderSetting getEncoderSetting() {
+        return useEncoder;
     }
 }
