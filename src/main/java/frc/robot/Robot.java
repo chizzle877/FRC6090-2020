@@ -50,6 +50,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto mode", chooser);
 
     Subsystems.gyro.zero();
+    /* Snap all wheels forward. This depends on the encoders being properly set. */
+    Subsystems.driveTrain.drive(0, 0, 0, 0);
   }
 
   /**
