@@ -1,7 +1,5 @@
 package frc.robot.subsystems;
 
-import java.util.HashMap;
-
 import frc.robot.RobotMap;
 import frc.robot.commands.joystick.DriveWithJoystick;
 import net.bancino.robotics.swerveio.SwerveDrive;
@@ -12,33 +10,30 @@ import net.bancino.robotics.swerveio.module.MultiEncoderModule;
 import net.bancino.robotics.swerveio.module.MultiEncoderModule.EncoderSetting;
 
 /**
- * The Swerve Drive subsystem.
- * 
- * The decision to have the maps be returned as unmodifiable
- * HashMap is so that members outside of this class cannot directly
- * add or remove items to the map, or change the values. That behavior
- * could lead to unpredictable results, so as a safety mechanism, while
- * the values of the map can be operated on, they cannot be modified.
+ * Our implementation of the Swerve Drive subsystem.
  * @author Jordan Bancino
  */
 public class DriveTrain extends SwerveDrive {
   public static final double BASE_WIDTH = 20;
   public static final double BASE_LENGTH = 22;
 
-  private static final HashMap<SwerveModule, AbstractSwerveModule> modules = createModuleMap();
-
-  public static HashMap<SwerveModule, AbstractSwerveModule> createModuleMap() {
-    HashMap<SwerveModule, MultiEncoderModule> moduleMap = new HashMap<>();
-    moduleMap.put(SwerveModule.FRONT_LEFT, new MK2SwerveModule(RobotMap.FRONT_LEFT_DRIVE_MOTOR, RobotMap.FRONT_LEFT_PIVOT_MOTOR, RobotMap.FRONT_LEFT_ANALOG_ENCODER));
-    moduleMap.put(SwerveModule.FRONT_RIGHT, new MK2SwerveModule(RobotMap.FRONT_RIGHT_DRIVE_MOTOR, RobotMap.FRONT_RIGHT_PIVOT_MOTOR, RobotMap.FRONT_RIGHT_ANALOG_ENCODER));
-    moduleMap.put(SwerveModule.REAR_LEFT, new MK2SwerveModule(RobotMap.REAR_LEFT_DRIVE_MOTOR, RobotMap.REAR_LEFT_PIVOT_MOTOR, RobotMap.REAR_LEFT_ANALOG_ENCODER));
-    moduleMap.put(SwerveModule.REAR_RIGHT, new MK2SwerveModule(RobotMap.REAR_RIGHT_DRIVE_MOTOR, RobotMap.REAR_RIGHT_PIVOT_MOTOR, RobotMap.REAR_RIGHT_ANALOG_ENCODER));
-    HashMap<SwerveModule, AbstractSwerveModule> retMap = new HashMap<>();
+  /**
+   * Create the SwerveDrive with the default settings and the
+   * robot map.
+   */
+  public DriveTrain() {
+    super(BASE_WIDTH, BASE_LENGTH,
+      new MK2SwerveModule(RobotMap.FRONT_LEFT_DRIVE_MOTOR, RobotMap.FRONT_LEFT_PIVOT_MOTOR, RobotMap.FRONT_LEFT_ANALOG_ENCODER),
+      new MK2SwerveModule(RobotMap.FRONT_RIGHT_DRIVE_MOTOR, RobotMap.FRONT_RIGHT_PIVOT_MOTOR, RobotMap.FRONT_RIGHT_ANALOG_ENCODER),
+      new MK2SwerveModule(RobotMap.REAR_LEFT_DRIVE_MOTOR, RobotMap.REAR_LEFT_PIVOT_MOTOR, RobotMap.REAR_LEFT_ANALOG_ENCODER),
+      new MK2SwerveModule(RobotMap.REAR_RIGHT_DRIVE_MOTOR, RobotMap.REAR_RIGHT_PIVOT_MOTOR, RobotMap.REAR_RIGHT_ANALOG_ENCODER)
+    );
+    countsPerPivotRevolution = 17.90471839904785;
     /**
      * Here we set the module's settings. Set them for each module.
      */
     for (var modKey : moduleMap.keySet()) {
-      MultiEncoderModule module = moduleMap.get(modKey);
+      MultiEncoderModule module = (MultiEncoderModule) moduleMap.get(modKey);
       /* TODO: Use the analog encoder! */
       module.setEncoder(EncoderSetting.INTERNAL);
       module.zeroDriveEncoder();
@@ -49,20 +44,7 @@ public class DriveTrain extends SwerveDrive {
       module.setPivotPidD(1);
       module.setPivotPidIZone(0);
       module.setPivotPidFF(0);
-
-      /* Make sure the module is returned. */
-      retMap.put(modKey, module);
     }
-    return retMap;
-  }
-
-  /**
-   * Create the SwerveDrive with the default settings and the
-   * robot map.
-   */
-  public DriveTrain() {
-    super(BASE_WIDTH, BASE_LENGTH, modules);
-    countsPerPivotRevolution = 17.90471839904785;
   }
 
   @Override
