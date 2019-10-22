@@ -1,17 +1,17 @@
 package frc.robot.subsystems;
 
+import java.util.HashMap;
+
 import frc.robot.RobotMap;
 import frc.robot.commands.joystick.DriveWithJoystick;
-import frc.robot.swerveio.AbstractSwerveModule;
-import frc.robot.swerveio.MultiEncoderModule;
-import frc.robot.swerveio.NeoSwerveModule;
-import frc.robot.swerveio.SwerveDrive;
-import frc.robot.swerveio.SwerveDriveCalculator;
-import frc.robot.swerveio.SwerveImplementationException;
-import frc.robot.swerveio.SwerveModule;
-import frc.robot.swerveio.MultiEncoderModule.EncoderSetting;
-
-import java.util.HashMap;
+import net.bancino.robotics.swerveio.module.MultiEncoderModule.EncoderSetting;
+import net.bancino.robotics.swerveio.SwerveDrive;
+import net.bancino.robotics.swerveio.SwerveDriveCalculator;
+import net.bancino.robotics.swerveio.SwerveImplementationException;
+import net.bancino.robotics.swerveio.SwerveModule;
+import net.bancino.robotics.swerveio.module.AbstractSwerveModule;
+import net.bancino.robotics.swerveio.module.MK2SwerveModule;
+import net.bancino.robotics.swerveio.module.MultiEncoderModule;
 
 /**
  * The Swerve Drive subsystem.
@@ -38,10 +38,10 @@ public class DriveTrain extends SwerveDrive {
 
   public static HashMap<SwerveModule, AbstractSwerveModule> createModuleMap() {
     HashMap<SwerveModule, MultiEncoderModule> moduleMap = new HashMap<>();
-    moduleMap.put(SwerveModule.FRONT_LEFT, new NeoSwerveModule(RobotMap.FRONT_LEFT_DRIVE_MOTOR, RobotMap.FRONT_LEFT_PIVOT_MOTOR, RobotMap.FRONT_LEFT_ANALOG_ENCODER));
-    moduleMap.put(SwerveModule.FRONT_RIGHT, new NeoSwerveModule(RobotMap.FRONT_RIGHT_DRIVE_MOTOR, RobotMap.FRONT_RIGHT_PIVOT_MOTOR, RobotMap.FRONT_RIGHT_ANALOG_ENCODER));
-    moduleMap.put(SwerveModule.REAR_LEFT, new NeoSwerveModule(RobotMap.REAR_LEFT_DRIVE_MOTOR, RobotMap.REAR_LEFT_PIVOT_MOTOR, RobotMap.REAR_LEFT_ANALOG_ENCODER));
-    moduleMap.put(SwerveModule.REAR_RIGHT, new NeoSwerveModule(RobotMap.REAR_RIGHT_DRIVE_MOTOR, RobotMap.REAR_RIGHT_PIVOT_MOTOR, RobotMap.REAR_RIGHT_ANALOG_ENCODER));
+    moduleMap.put(SwerveModule.FRONT_LEFT, new MK2SwerveModule(RobotMap.FRONT_LEFT_DRIVE_MOTOR, RobotMap.FRONT_LEFT_PIVOT_MOTOR, RobotMap.FRONT_LEFT_ANALOG_ENCODER));
+    moduleMap.put(SwerveModule.FRONT_RIGHT, new MK2SwerveModule(RobotMap.FRONT_RIGHT_DRIVE_MOTOR, RobotMap.FRONT_RIGHT_PIVOT_MOTOR, RobotMap.FRONT_RIGHT_ANALOG_ENCODER));
+    moduleMap.put(SwerveModule.REAR_LEFT, new MK2SwerveModule(RobotMap.REAR_LEFT_DRIVE_MOTOR, RobotMap.REAR_LEFT_PIVOT_MOTOR, RobotMap.REAR_LEFT_ANALOG_ENCODER));
+    moduleMap.put(SwerveModule.REAR_RIGHT, new MK2SwerveModule(RobotMap.REAR_RIGHT_DRIVE_MOTOR, RobotMap.REAR_RIGHT_PIVOT_MOTOR, RobotMap.REAR_RIGHT_ANALOG_ENCODER));
     HashMap<SwerveModule, AbstractSwerveModule> retMap = new HashMap<>();
     /**
      * Here we set the module's settings. Set them for each module.
