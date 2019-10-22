@@ -4,14 +4,12 @@ import java.util.HashMap;
 
 import frc.robot.RobotMap;
 import frc.robot.commands.joystick.DriveWithJoystick;
-import net.bancino.robotics.swerveio.module.MultiEncoderModule.EncoderSetting;
 import net.bancino.robotics.swerveio.SwerveDrive;
-import net.bancino.robotics.swerveio.SwerveDriveCalculator;
-import net.bancino.robotics.swerveio.SwerveImplementationException;
 import net.bancino.robotics.swerveio.SwerveModule;
 import net.bancino.robotics.swerveio.module.AbstractSwerveModule;
 import net.bancino.robotics.swerveio.module.MK2SwerveModule;
 import net.bancino.robotics.swerveio.module.MultiEncoderModule;
+import net.bancino.robotics.swerveio.module.MultiEncoderModule.EncoderSetting;
 
 /**
  * The Swerve Drive subsystem.
@@ -26,13 +24,6 @@ import net.bancino.robotics.swerveio.module.MultiEncoderModule;
 public class DriveTrain extends SwerveDrive {
   public static final double BASE_WIDTH = 20;
   public static final double BASE_LENGTH = 22;
-
-  /**
-   * This map stores how many counts it takes to go one full revolution of the wheel
-   * on the pivot motor. This is set up for MultiEncoderModules that may switch back
-   * and forth between encoders, so each encoder's revolution constant can be set here.
-   */
-  public static final double PIVOT_REVOLUTION = 17.90471839904785;
 
   private static final HashMap<SwerveModule, AbstractSwerveModule> modules = createModuleMap();
 
@@ -71,44 +62,7 @@ public class DriveTrain extends SwerveDrive {
    */
   public DriveTrain() {
     super(BASE_WIDTH, BASE_LENGTH, modules);
-  }
-
-  @Override
-  public void drive(double fwd, double str, double rcw, double gyroAngle) throws SwerveImplementationException {
-    for (SwerveModule module : modules.keySet()) {
-      //SwerveModule module = SwerveModule.FRONT_LEFT;
-        if (module != null) {
-          double speed = calc.getWheelSpeed(module, fwd, str, rcw); /* Use the calculator to calculate wheel speed for this module. */
-          double targetAngle = calc.getWheelAngle(module, fwd, str, rcw, gyroAngle); /* Calculate the pivot angle for this module. */
-          AbstractSwerveModule swerveModule = modules.get(module); /* Fetch the module from the module map so we can manipulate it. */
-
-          /**
-           * Convert the target angle from a degree measure to an encoder reference using the
-           * static method in the swerve drive calculator. This takes the angle measure in degrees
-           * and how many encoder counts it takes to go one full revolution to convert the angle
-           * into an encoder count.
-           */
-          double currentPos = swerveModule.getPivotMotorEncoder();
-          double targetPos = SwerveDriveCalculator.convertFromDegrees(targetAngle, PIVOT_REVOLUTION);
-
-          /* Find the distance between where we currently are and where we want to be. */
-          double distance = (targetPos - (currentPos % PIVOT_REVOLUTION));
-          /**
-           * Find the shortest distance possible to get from the current position to
-           * the target position.
-           */
-          if (distance > (PIVOT_REVOLUTION / 2.0) || distance < - (PIVOT_REVOLUTION / 2.0)) {
-            distance = PIVOT_REVOLUTION - Math.abs(distance);
-          }
-          /* The final reference is just an offset of distance from the current position. */
-          double pivotRef = currentPos + distance;
-
-          /* Pass the pivot reference into the pivot motor of the swerve module. */
-          swerveModule.setPivotReference(pivotRef);
-          /* Set the drive motor speed to the calculated speed. */
-          swerveModule.setDriveMotorSpeed(speed);
-        }
-    } 
+    countsPerPivotRevolution = 17.90471839904785;
   }
 
   @Override
