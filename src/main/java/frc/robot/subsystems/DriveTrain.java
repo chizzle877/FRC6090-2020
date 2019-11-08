@@ -21,23 +21,28 @@ import net.bancino.robotics.swerveio.encoder.MK2Encoder;
 public class DriveTrain extends SwerveDrive {
   public static final double BASE_WIDTH = 20;
   public static final double BASE_LENGTH = 22;
-  //public static final double COUNTS_PER_PIVOT_REVOLUTION = 17.90471839904785;
+  // public static final double COUNTS_PER_PIVOT_REVOLUTION = 17.90471839904785;
   public static final double COUNTS_PER_PIVOT_REVOLUTION = 360; /* Our 1:1 Encoder. */
 
-  public static final double FRONT_RIGHT_ENCODER_OFFSET = 0;
-  public static final double FRONT_LEFT_ENCODER_OFFSET = 0;
-  public static final double REAR_LEFT_ENCODER_OFFSET = 0;
-  public static final double REAR_RIGHT_ENCODER_OFFSET = 0;
+  public static final double FRONT_RIGHT_ENCODER_OFFSET = 91.054678;
+  public static final double FRONT_LEFT_ENCODER_OFFSET  = 326.337857;
+  public static final double REAR_LEFT_ENCODER_OFFSET   = 179.121075;
+  public static final double REAR_RIGHT_ENCODER_OFFSET  = 234.404273;
+
+  private static MK2Encoder frontRightEncoder = new MK2Encoder(RobotMap.FRONT_RIGHT_ANALOG_ENCODER,
+      FRONT_RIGHT_ENCODER_OFFSET);
+  private static MK2Encoder frontLeftEncoder = new MK2Encoder(RobotMap.FRONT_LEFT_ANALOG_ENCODER,
+      FRONT_LEFT_ENCODER_OFFSET);
+  private static MK2Encoder rearLeftEncoder = new MK2Encoder(RobotMap.REAR_LEFT_ANALOG_ENCODER,
+      REAR_LEFT_ENCODER_OFFSET);
+  private static MK2Encoder rearRightEncoder = new MK2Encoder(RobotMap.REAR_RIGHT_ANALOG_ENCODER,
+      REAR_RIGHT_ENCODER_OFFSET);
 
   /**
    * Create the SwerveDrive with the default settings and the robot map.
    */
   public DriveTrain() throws SwerveException {
     super(BASE_WIDTH, BASE_LENGTH, COUNTS_PER_PIVOT_REVOLUTION, () -> {
-      MK2Encoder frontRightEncoder = new MK2Encoder(RobotMap.FRONT_RIGHT_ANALOG_ENCODER, FRONT_RIGHT_ENCODER_OFFSET);
-      MK2Encoder frontLeftEncoder = new MK2Encoder(RobotMap.FRONT_LEFT_ANALOG_ENCODER, FRONT_LEFT_ENCODER_OFFSET);
-      MK2Encoder rearLeftEncoder = new MK2Encoder(RobotMap.REAR_LEFT_ANALOG_ENCODER, REAR_LEFT_ENCODER_OFFSET);
-      MK2Encoder rearRightEncoder = new MK2Encoder(RobotMap.REAR_RIGHT_ANALOG_ENCODER, REAR_RIGHT_ENCODER_OFFSET);
 
       var modules = new HashMap<SwerveModule, AbstractSwerveModule>();
       modules.put(SwerveModule.FRONT_RIGHT,
@@ -51,19 +56,27 @@ public class DriveTrain extends SwerveDrive {
 
       return modules; /* Return the module map for the constructor's use. */
     }, (module) -> {
-      //MultiEncoderModule memodule = (MultiEncoderModule) module;
+      // MultiEncoderModule memodule = (MultiEncoderModule) module;
       /* Use the analog encoder instead! */
-      //memodule.setEncoder(EncoderSetting.INTERNAL);
-      //memodule.zeroDriveEncoder();
+      // memodule.setEncoder(EncoderSetting.INTERNAL);
+      // memodule.zeroDriveEncoder();
 
       module.setPivotClosedLoopRampRate(0);
       module.setPivotPidP(0.1);
       module.setPivotPidI(1e-4);
       module.setPivotPidD(1);
-      module.setPivotPidIZone(0);
+      // module.setPivotPidIZone(0);
       module.setPivotPidFF(0);
     });
 
+  }
+
+  @Override
+  public void drive(double fwd, double str, double rcw, double gyroAngle) {
+    // super.drive(fwd, str, rcw, gyroAngle);
+    //System.out.printf(
+    //    "Front Right Encoder: %12f Front Left Encoder: %12f Rear Left Encoder: %12f Rear Right Encoder: %12f\n",
+    //    frontRightEncoder.get(), frontLeftEncoder.get(), rearLeftEncoder.get(), rearRightEncoder.get());
   }
 
   @Override
