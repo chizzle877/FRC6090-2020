@@ -7,7 +7,7 @@ package frc.robot;
  * floating around.
  */
 public class RobotMap {
-  /**
+  /*
    * Motors - CAN IDs
    */
   public static final int FRONT_RIGHT_DRIVE_MOTOR = 1; /* Module 1 */
@@ -20,6 +20,9 @@ public class RobotMap {
   public static final int REAR_LEFT_PIVOT_MOTOR   = 7; /* Module 3 */
   public static final int REAR_RIGHT_PIVOT_MOTOR  = 8; /* Module 4 */
 
+  /*
+   * Encoders - Analog Ports
+   */
   public static final int FRONT_RIGHT_ANALOG_ENCODER = 0; /* Module 1 */
   public static final int FRONT_LEFT_ANALOG_ENCODER  = 1; /* Module 2 */
   public static final int REAR_LEFT_ANALOG_ENCODER   = 2; /* Module 3 */

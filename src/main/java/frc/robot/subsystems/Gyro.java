@@ -13,21 +13,36 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.SPI;
 
 /**
- * Add your docs here.
+ * The Gyro allows field centric navigation.
+ * 
+ * @author Jordan Bancino
  */
 public class Gyro extends Subsystem {
-
-  public Gyro() {
-    zero();
-  }
 
   /* Create the AHRS NavX Gyro */
   private final AHRS navxGyro = new AHRS(SPI.Port.kMXP);
 
+  /**
+   * Zero the gyro.
+   */
+  public Gyro() {
+    zero();
+  }
+
+  /**
+   * Get the continuous angle of the gyro, accumulative.
+   * 
+   * @return The continuous angle straight from the gyro.
+   */
   public double getAngle() {
     return navxGyro.getAngle();
   }
 
+  /**
+   * Get the actual yaw value, this is not continuous, it reports an actual angle.
+   * 
+   * @return The direction in degrees that the gyro is facing.
+   */
   public double getYaw() {
     return navxGyro.getYaw();
   }
