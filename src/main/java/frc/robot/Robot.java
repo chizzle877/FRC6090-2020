@@ -37,10 +37,8 @@ public class Robot extends TimedRobot {
 
     /* Zero the drivetrain encoders when button 11 is pressed. */
     oi.registerCommand(11, ActionType.PRESS, () -> Subsystems.driveTrain.zero(), Subsystems.driveTrain);
-    oi.registerCommand(12, ActionType.PRESS, () -> {
-      Subsystems.gyro.zero();
-      System.out.println("Gyro reset command called.");
-    }, Subsystems.gyro);
+    /* Zero the gyro when button 12 is pressed. */
+    oi.registerCommand(12, ActionType.PRESS, () -> Subsystems.gyro.zero(), Subsystems.gyro);
   }
 
   @Override
