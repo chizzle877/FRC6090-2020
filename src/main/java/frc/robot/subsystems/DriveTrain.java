@@ -21,7 +21,8 @@ import net.bancino.robotics.swerveio.encoder.MK2Encoder;
 public class DriveTrain extends SwerveDrive {
   public static final double BASE_WIDTH = 20;
   public static final double BASE_LENGTH = 22;
-  public static final double COUNTS_PER_PIVOT_REVOLUTION = 17.90471839904785;
+  //public static final double COUNTS_PER_PIVOT_REVOLUTION = 17.90471839904785;
+  public static final double COUNTS_PER_PIVOT_REVOLUTION = 360; /* Our 1:1 Encoder. */
 
   public static final double FRONT_RIGHT_ENCODER_OFFSET = 0;
   public static final double FRONT_LEFT_ENCODER_OFFSET = 0;
@@ -50,10 +51,10 @@ public class DriveTrain extends SwerveDrive {
 
       return modules; /* Return the module map for the constructor's use. */
     }, (module) -> {
-      MultiEncoderModule memodule = (MultiEncoderModule) module;
-      /* TODO: Use the analog encoder! */
-      memodule.setEncoder(EncoderSetting.INTERNAL);
-      memodule.zeroDriveEncoder();
+      //MultiEncoderModule memodule = (MultiEncoderModule) module;
+      /* Use the analog encoder instead! */
+      //memodule.setEncoder(EncoderSetting.INTERNAL);
+      //memodule.zeroDriveEncoder();
 
       module.setPivotClosedLoopRampRate(0);
       module.setPivotPidP(0.1);
