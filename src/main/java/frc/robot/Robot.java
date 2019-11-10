@@ -35,10 +35,6 @@ public class Robot extends TimedRobot {
      * across robot projects and years. 
      */
 
-    /* Zero the drivetrain encoders when button 11 is pressed. */
-    oi.registerCommand(11, ActionType.PRESS, () -> Subsystems.driveTrain.zero(), Subsystems.driveTrain);
-    /* Zero the gyro when button 12 is pressed. */
-    oi.registerCommand(12, ActionType.PRESS, () -> Subsystems.gyro.zero(), Subsystems.gyro);
   }
 
   @Override
