@@ -21,11 +21,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @author Jordan Bancino
  */
 public class DriveTrain extends SwerveDrive {
-  public static final double BASE_WIDTH = 20;
-  public static final double BASE_LENGTH = 22;
-  // public static final double COUNTS_PER_PIVOT_REVOLUTION = 17.90471839904785;
-  public static final double COUNTS_PER_PIVOT_REVOLUTION = 360; /* Our 1:1 Encoder. */
+  /* These are in centimeters, but unit really doesn't matter. */
+  public static final double BASE_WIDTH = 51;
+  public static final double BASE_LENGTH = 56;
+  /* Our 1:1 Encoder. */
+  public static final double COUNTS_PER_PIVOT_REVOLUTION = 360;
 
+  /* The encoder offsets tell us where zero is for each motor. */
   public static final double FRONT_RIGHT_ENCODER_OFFSET = 91.054678;
   public static final double FRONT_LEFT_ENCODER_OFFSET  = 326.337857;
   public static final double REAR_LEFT_ENCODER_OFFSET   = 179.121075;
@@ -45,7 +47,6 @@ public class DriveTrain extends SwerveDrive {
    */
   public DriveTrain() throws SwerveException {
     super(BASE_WIDTH, BASE_LENGTH, COUNTS_PER_PIVOT_REVOLUTION, () -> {
-
       var modules = new HashMap<SwerveModule, AbstractSwerveModule>();
       modules.put(SwerveModule.FRONT_RIGHT,
           new MK2SwerveModule(RobotMap.FRONT_RIGHT_DRIVE_MOTOR, RobotMap.FRONT_RIGHT_PIVOT_MOTOR, frontRightEncoder));
@@ -55,16 +56,10 @@ public class DriveTrain extends SwerveDrive {
           new MK2SwerveModule(RobotMap.REAR_LEFT_DRIVE_MOTOR, RobotMap.REAR_LEFT_PIVOT_MOTOR, rearLeftEncoder));
       modules.put(SwerveModule.REAR_RIGHT,
           new MK2SwerveModule(RobotMap.REAR_RIGHT_DRIVE_MOTOR, RobotMap.REAR_RIGHT_PIVOT_MOTOR, rearRightEncoder));
-
       return modules; /* Return the module map for the constructor's use. */
     }, (module) -> {
       module.setPivotClosedLoopRampRate(0);
     });
-  }
-
-  @Override
-  public void drive(double fwd, double str, double rcw, double gyroAngle) {
-    super.drive(fwd, str, rcw, gyroAngle);
   }
 
   @Override
