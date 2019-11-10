@@ -40,12 +40,6 @@ public class DriveTrain extends SwerveDrive {
   private static MK2Encoder rearRightEncoder = new MK2Encoder(RobotMap.REAR_RIGHT_ANALOG_ENCODER,
       REAR_RIGHT_ENCODER_OFFSET);
 
-  static {
-    SmartDashboard.putNumber("Swerve/Pivot/PID_P", 0.0014);
-    SmartDashboard.putNumber("Swerve/Pivot/PID_I", 0.000004);
-    SmartDashboard.putNumber("Swerve/Pivot/PID_D", 0.001);
-  }
-
   /**
    * Create the SwerveDrive with the default settings and the robot map.
    */
@@ -65,21 +59,12 @@ public class DriveTrain extends SwerveDrive {
       return modules; /* Return the module map for the constructor's use. */
     }, (module) -> {
       module.setPivotClosedLoopRampRate(0);
-      module.setPivotPidP(SmartDashboard.getNumber("Swerve/Pivot/PID_I", 0));
-      module.setPivotPidI(SmartDashboard.getNumber("Swerve/Pivot/PID_I", 0));
-      module.setPivotPidD(SmartDashboard.getNumber("Swerve/Pivot/PID_I", 0));
-      //// module.setPivotPidIZone(0);
-      //module.setPivotPidFF(0);
     });
-
   }
 
   @Override
   public void drive(double fwd, double str, double rcw, double gyroAngle) {
     super.drive(fwd, str, rcw, gyroAngle);
-    //System.out.printf(
-    //    "Front Right Encoder: %12f Front Left Encoder: %12f Rear Left Encoder: %12f Rear Right Encoder: %12f\n",
-    //    frontRightEncoder.get(), frontLeftEncoder.get(), rearLeftEncoder.get(), rearRightEncoder.get());
   }
 
   @Override
