@@ -26,7 +26,7 @@ public class DriveWithJoystick extends Command {
      * was added to prevent random values being assigned when the joystick
      * wasn't being touched.
      */
-    Robot.oi.setDeadband(0.2);
+    Robot.oi.setDeadband(0.1);
   }
 
   @Override
@@ -38,7 +38,7 @@ public class DriveWithJoystick extends Command {
      * Drive the drivetrain using the axes from the joystick and the gyro
      * angle.
      */
-    Subsystems.driveTrain.drive(y, x, z, Subsystems.gyro.getYaw());
+    Subsystems.driveTrain.drive(y, -x, -z, Subsystems.gyro.getYaw());
   }
 
   /**
