@@ -34,7 +34,7 @@ public class Robot extends TimedRobot {
      * in the OI. This method allows the OI to be portable, that is, it can be used
      * across robot projects and years. 
      */
-
+    oi.registerCommand(11, ActionType.PRESS, () -> Subsystems.gyro.zero(), Subsystems.gyro);
   }
 
   @Override
