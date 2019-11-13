@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.OI.ActionType;
+import frc.robot.commands.joystick.PointExecutor;
+import frc.robot.commands.joystick.PointRecorder;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -34,7 +36,9 @@ public class Robot extends TimedRobot {
      * in the OI. This method allows the OI to be portable, that is, it can be used
      * across robot projects and years. 
      */
-    oi.registerCommand(11, ActionType.PRESS, () -> Subsystems.gyro.zero(), Subsystems.gyro);
+    oi.registerCommand(10, ActionType.PRESS, () -> Subsystems.gyro.zero(), Subsystems.gyro);
+    oi.registerCommand(11, ActionType.PRESS, new PointRecorder());
+    oi.registerCommand(12, ActionType.PRESS, new PointExecutor());
   }
 
   @Override
