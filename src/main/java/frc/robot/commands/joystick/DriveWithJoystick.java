@@ -31,14 +31,17 @@ public class DriveWithJoystick extends Command {
 
   @Override
   protected void execute() {
-    double y = Robot.oi.deadbandMod(Robot.oi.getThrottledY());
-    double x = Robot.oi.deadbandMod(Robot.oi.getThrottledX());
-    double z = Robot.oi.deadbandMod(Robot.oi.getThrottledZ());
+    //double fwd = Robot.oi.deadbandMod(Robot.oi.getThrottledY());
+    //double str = -Robot.oi.deadbandMod(Robot.oi.getThrottledX());
+    //double rcw = -Robot.oi.deadbandMod(Robot.oi.getThrottledZ());
+    double fwd = Robot.oi.xBoxLeftJoystickVertical();
+    double str = Robot.oi.xBoxLeftJoystickHorizontal();
+    double rcw = Robot.oi.xBoxRightJoystickHorizontal();
     /**
      * Drive the drivetrain using the axes from the joystick and the gyro
      * angle.
      */
-    Subsystems.driveTrain.drive(y, -x, -z, Subsystems.gyro.getYaw());
+    Subsystems.driveTrain.drive(fwd, str, rcw, Subsystems.gyro.getYaw());
   }
 
   /**
