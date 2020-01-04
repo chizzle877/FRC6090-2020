@@ -31,7 +31,7 @@ public class DriveTrain extends SwerveDrive {
   public static final double FRONT_RIGHT_ENCODER_OFFSET = 91.054678;
   public static final double FRONT_LEFT_ENCODER_OFFSET  = 326.337857;
   public static final double REAR_LEFT_ENCODER_OFFSET   = 179.121075;
-  public static final double REAR_RIGHT_ENCODER_OFFSET  = 234.404273;
+  public static final double REAR_RIGHT_ENCODER_OFFSET  = 26.71;
 
   private static MK2Encoder frontRightEncoder = new MK2Encoder(RobotMap.FRONT_RIGHT_ANALOG_ENCODER,
       FRONT_RIGHT_ENCODER_OFFSET);
@@ -60,6 +60,11 @@ public class DriveTrain extends SwerveDrive {
     }, (module) -> {
       module.setPivotClosedLoopRampRate(0);
     });
+  }
+
+
+  public double exportEncoder() {
+    return moduleMap.get(SwerveModule.REAR_RIGHT).getPivotMotorEncoder();
   }
 
   @Override

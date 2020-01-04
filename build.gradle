@@ -1,6 +1,6 @@
 plugins {
     id "java"
-    id "edu.wpi.first.GradleRIO" version "2019.4.1"
+    id "edu.wpi.first.GradleRIO" version "2020.1.2"
 }
 
 sourceCompatibility = JavaVersion.VERSION_11
@@ -40,11 +40,7 @@ dependencies {
     nativeDesktopZip wpi.deps.vendor.jni(wpi.platforms.desktop)
     testCompile 'junit:junit:4.12'
 
-    compile('net.bancino.robotics:SwerveIO') {
-        version {
-            branch = 'master'
-        }
-    }
+    compile 'net.bancino.robotics:SwerveIO:1.0'
 }
 
 jar {

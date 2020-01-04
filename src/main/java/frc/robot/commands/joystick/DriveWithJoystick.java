@@ -21,22 +21,15 @@ public class DriveWithJoystick extends Command {
 
   @Override
   protected void initialize() {
-    /*
-     * The joystick I was given was quite crappy, so a small deadband
-     * was added to prevent random values being assigned when the joystick
-     * wasn't being touched.
-     */
-    Robot.oi.setDeadband(0.1);
+    Robot.oi.setDeadband(0.15);
   }
 
   @Override
   protected void execute() {
-    //double fwd = Robot.oi.deadbandMod(Robot.oi.getThrottledY());
-    //double str = -Robot.oi.deadbandMod(Robot.oi.getThrottledX());
-    //double rcw = -Robot.oi.deadbandMod(Robot.oi.getThrottledZ());
-    double fwd = Robot.oi.xBoxLeftJoystickVertical();
-    double str = Robot.oi.xBoxLeftJoystickHorizontal();
-    double rcw = Robot.oi.xBoxRightJoystickHorizontal();
+    double throttle = Robot.oi.getThrottle();
+    double fwd = Robot.oi.deadbandMod(Robot.oi.xBoxLeftJoystickVertical()* throttle);
+    double str = -Robot.oi.deadbandMod(Robot.oi.xBoxLeftJoystickHorizontal()* throttle);
+    double rcw = -Robot.oi.deadbandMod(Robot.oi.xBoxRightJoystickHorizontal()* throttle);
     /**
      * Drive the drivetrain using the axes from the joystick and the gyro
      * angle.
